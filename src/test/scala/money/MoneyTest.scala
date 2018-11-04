@@ -16,5 +16,5 @@ class MoneyTest extends FunSuite {
 }
 
 case class Doller(amount: Int) {
-  def times(multiplier: Int) = Doller(amount * multiplier)
+  def times(multiplier: Int): Doller = Doller(amount * multiplier)
 }
