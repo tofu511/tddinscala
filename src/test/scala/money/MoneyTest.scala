@@ -13,6 +13,8 @@ class MoneyTest extends FunSuite {
   test("equality") {
     assert(Dollar(5) === Dollar(5))
     assert(Dollar(5) !== Dollar(6))
+    assert(Franc(5) === Franc(5))
+    assert(Franc(5) !== Franc(6))
   }
 
   test("franc multiplication") {
@@ -22,10 +24,15 @@ class MoneyTest extends FunSuite {
   }
 }
 
-case class Dollar(amount: Int) {
-  def times(multiplier: Int): Dollar = Dollar(amount * multiplier)
+case class Dollar(override val amount: Int) extends Money {
+  override def times(multiplier: Int): Dollar = Dollar(amount * multiplier)
 }
 
-case class Franc(amount: Int) {
-  def times(multiplier: Int): Franc = Franc(amount * multiplier)
+case class Franc(override val amount: Int) extends Money {
+  override def times(multiplier: Int): Franc = Franc(amount * multiplier)
+}
+
+sealed trait Money {
+  val amount: Int
+  def times(multiplier: Int): Money
 }
