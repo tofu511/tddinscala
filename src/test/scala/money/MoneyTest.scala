@@ -28,4 +28,14 @@ class MoneyTest extends FunSuite {
     assert("USD" === Money(1)(USD).currencyUnit)
     assert("CHF" === Money(1)(CHF).currencyUnit)
   }
+
+  test("simple addition") {
+    implicit val currencyUnit: String = USD
+    val five: Money = Money(5)
+    val sum: Expression = five.plus(five)
+    val bank: Bank = Bank()
+    val reduced: Money = bank.reduce(sum, USD)
+    assert(Money(10) === reduced)
+  }
+
 }

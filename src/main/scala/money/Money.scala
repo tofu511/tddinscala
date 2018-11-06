@@ -1,9 +1,10 @@
 package money
 
-sealed trait Money {
+sealed trait Money extends Expression {
+  implicit val currencyUnit: String
   def amount: Int
   def times(multiplier: Int): Money = Money(amount * multiplier)(currencyUnit)
-  implicit val currencyUnit: String
+  def plus(added: Money): Expression = Money(amount + added.amount)
 }
 
 object Money {
