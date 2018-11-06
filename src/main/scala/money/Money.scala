@@ -4,7 +4,8 @@ sealed trait Money extends Expression {
   implicit val currencyUnit: String
   def amount: Int
   def times(multiplier: Int): Money = Money(amount * multiplier)(currencyUnit)
-  def plus(added: Money): Expression = Money(amount + added.amount)
+  def plus(addend: Money): Expression = Sum(this, addend)
+  def reduce(to: String): Money = Money(amount)
 }
 
 object Money {
