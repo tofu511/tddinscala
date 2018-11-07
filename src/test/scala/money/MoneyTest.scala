@@ -33,7 +33,7 @@ class MoneyTest extends FunSuite {
     implicit val currencyUnit: String = USD
     val five: Money = Money(5)
     val sum: Expression = five.plus(five)
-    val bank: Bank = Bank()
+    val bank: Bank = Bank(Exchange(USD, USD))
     val reduced: Money = bank.reduce(sum, USD)
     assert(Money(10) === reduced)
   }
@@ -50,13 +50,20 @@ class MoneyTest extends FunSuite {
   test("reduces sum") {
     implicit val currencyUnit: String = USD
     val sum: Sum = Sum(Money(5), Money(3))
-    val result: Money = Bank().reduce(sum, USD)
+    val result: Money = Bank(Exchange(USD, USD)).reduce(sum, USD)
     assert(Money(8) === result)
   }
 
   test("reduce money") {
     implicit val currencyUnit: String = USD
-    val result: Money = Bank().reduce(Money(5), USD)
+    val result: Money = Bank(Exchange(USD, USD)).reduce(Money(5), USD)
     assert(Money(5) === result)
   }
+
+  test("reduce money different currency") {
+    val bank: Bank = Bank(Exchange(from = CHF, to = USD, rate = 2))
+    val result: Money = bank.reduce(Money(2)(CHF), USD)
+    assert(Money(1)(USD) === result)
+  }
+
 }

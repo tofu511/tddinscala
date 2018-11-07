@@ -5,7 +5,12 @@ sealed trait Money extends Expression {
   def amount: Int
   def times(multiplier: Int): Money = Money(amount * multiplier)(currencyUnit)
   def plus(addend: Money): Expression = Sum(this, addend)
-  def reduce(to: String): Money = Money(amount)
+  def reduce(bank: Bank, to: String): Money =  {
+    currencyUnit match {
+      case "USD" => Money(amount)(to)
+      case "CHF" => Money(amount / bank.exchange.rate)(to)
+    }
+  }
 }
 
 object Money {
