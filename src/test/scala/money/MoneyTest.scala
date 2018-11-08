@@ -74,4 +74,22 @@ class MoneyTest extends FunSuite {
     assert(Money(10)(USD) === result)
   }
 
+  test("sum plus money") {
+    val fiveBucks: Expression = Money(5)(USD)
+    val tenFrancs: Expression = Money(10)(CHF)
+    val bank: Bank = Bank(Exchange(CHF, USD, 2))
+    val sum: Expression = Sum(fiveBucks, tenFrancs).plus(fiveBucks)
+    val result: Money = bank.reduce(sum, USD)
+    assert(Money(15)(USD) === result)
+  }
+
+  test("sum times") {
+    val fiveBucks: Expression = Money(5)(USD)
+    val tenFrancs: Expression = Money(10)(CHF)
+    val bank: Bank = Bank(Exchange(CHF, USD, 2))
+    val sum: Expression = Sum(fiveBucks, tenFrancs).times(2)
+    val result: Money = bank.reduce(sum, USD)
+    assert(Money(20)(USD) === result)
+  }
+
 }
