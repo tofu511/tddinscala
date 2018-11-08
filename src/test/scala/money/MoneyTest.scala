@@ -66,4 +66,12 @@ class MoneyTest extends FunSuite {
     assert(Money(1)(USD) === result)
   }
 
+  test("mixed addition") {
+    val fiveBucks: Expression = Money(5)(USD)
+    val tenFrancs: Expression = Money(10)(CHF)
+    val bank = Bank(exchange = Exchange(CHF, USD, 2))
+    val result: Money = bank.reduce(fiveBucks.plus(tenFrancs), USD)
+    assert(Money(10)(USD) === result)
+  }
+
 }

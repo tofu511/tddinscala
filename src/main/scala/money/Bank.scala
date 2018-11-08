@@ -6,7 +6,7 @@ case class Bank(exchange: Exchange) {
 
 case class Exchange(from: String, to: String, rate: Int = 1) {
   def apply(from: String, to: String, rate: Int): Exchange = {
-    if (from == to) Exchange(from, to)
+    if (from == to) Exchange(from, to, 1)
     else Exchange(from, to, rate)
   }
 }

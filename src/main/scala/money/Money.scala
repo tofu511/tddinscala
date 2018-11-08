@@ -3,8 +3,8 @@ package money
 sealed trait Money extends Expression {
   implicit val currencyUnit: String
   def amount: Int
-  def times(multiplier: Int): Money = Money(amount * multiplier)(currencyUnit)
-  def plus(addend: Money): Expression = Sum(this, addend)
+  def times(multiplier: Int): Expression = Money(amount * multiplier)(currencyUnit)
+  def plus(addend: Expression): Expression = Sum(this, addend)
   def reduce(bank: Bank, to: String): Money =  {
     currencyUnit match {
       case "USD" => Money(amount)(to)
