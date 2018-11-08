@@ -4,18 +4,15 @@ import org.scalatest.FunSuite
 
 class MoneyTest extends FunSuite {
 
-  val USD: String = "USD"
-  val CHF: String = "CHF"
-
   test("money multiplication") {
-    implicit val currencyUnit: String = USD
+    implicit val currencyUnit: CurrencyUnit = USD
     val five: Money = Money(5)
     assert(Money(10) === five.times(2))
     assert(Money(15) === five.times(3))
   }
 
   test("money equality") {
-    implicit val currencyUnit: String = USD
+    implicit val currencyUnit: CurrencyUnit = USD
     assert(Money(5) === Money(5))
     assert(Money(5) !== Money(6))
   }
@@ -25,12 +22,12 @@ class MoneyTest extends FunSuite {
   }
 
   test("currency unit") {
-    assert("USD" === Money(1)(USD).currencyUnit)
-    assert("CHF" === Money(1)(CHF).currencyUnit)
+    assert(USD === Money(1)(USD).currencyUnit)
+    assert(CHF === Money(1)(CHF).currencyUnit)
   }
 
   test("simple addition") {
-    implicit val currencyUnit: String = USD
+    implicit val currencyUnit: CurrencyUnit = USD
     val five: Money = Money(5)
     val sum: Expression = five.plus(five)
     val bank: Bank = Bank(Exchange(USD, USD))
@@ -39,7 +36,7 @@ class MoneyTest extends FunSuite {
   }
 
   test("plus returns sum") {
-    implicit val currencyUnit: String = USD
+    implicit val currencyUnit: CurrencyUnit = USD
     val five: Money = Money(5)
     val result: Expression = five.plus(five)
     val sum: Sum = result.asInstanceOf[Sum]
@@ -48,14 +45,14 @@ class MoneyTest extends FunSuite {
   }
 
   test("reduces sum") {
-    implicit val currencyUnit: String = USD
+    implicit val currencyUnit: CurrencyUnit = USD
     val sum: Sum = Sum(Money(5), Money(3))
     val result: Money = Bank(Exchange(USD, USD)).reduce(sum, USD)
     assert(Money(8) === result)
   }
 
   test("reduce money") {
-    implicit val currencyUnit: String = USD
+    implicit val currencyUnit: CurrencyUnit = USD
     val result: Money = Bank(Exchange(USD, USD)).reduce(Money(5), USD)
     assert(Money(5) === result)
   }
