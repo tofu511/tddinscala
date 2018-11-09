@@ -1,4 +1,4 @@
-# tddinscala
+# Scalaでテスト駆動開発
 [テスト駆動開発](https://www.ohmsha.co.jp/book/9784274217883/)をScalaで写経
 
 ## The Money Example
@@ -14,3 +14,5 @@
 - [x] 通貨の概念
 - [x] timesの一般化
 
+## xUnit
+- [x] テストメソッドを呼び出す
